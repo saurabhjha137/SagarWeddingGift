@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Valentine Special 💘</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #ff758c, #ff7eb3);
+      font-family: 'Arial', sans-serif;
+      overflow: hidden;
+    }
+
+    .card {
+      background: white;
+      padding: 40px;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      width: 500px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 400px;
+    }
+
+    h1 {
+      color: #ff4d6d;
+      margin: 0 0 30px 0;
+      font-size: 24px;
+      width: 100%;
+    }
+
+    .buttons-container {
+      position: relative;
+      width: 100%;
+      height: 120px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+    }
+
+    button {
+      padding: 10px 25px;
+      font-size: 16px;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+    }
+
+    #yesBtn {
+      background: #ff4d6d;
+      color: white;
+      margin-right: 10px;
+    }
+
+    #yesBtn:hover {
+      background: #ff1f47;
+    }
+
+    #noBtn {
+      background: #ccc;
+      position: absolute;
+      transition: all 0.1s ease;
+    }
+
+    #noBtn:hover {
+      background: #aaa;
+    }
+
+    /* Celebration Card */
+    .celebration {
+      display: none;
+      background: white;
+      padding: 40px;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      animation: pop 0.6s ease;
+      width: 500px;
+    }
+
+    .celebration h2 {
+      color: #ff4d6d;
+      font-size: 28px;
+      margin: 0 0 15px 0;
+    }
+
+    .celebration p {
+      font-size: 20px;
+      margin: 0;
+    }
+
+    /* Animations */
+    @keyframes pop {
+      0% {
+        transform: scale(0.5);
+        opacity: 0;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-110vh);
+        opacity: 0;
+      }
+    }
+
+    /* Floating Hearts */
+    .heart {
+      position: fixed;
+      bottom: -20px;
+      font-size: 24px;
+      animation: floatUp 4s linear infinite;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <!-- Question Card -->
+  <div class="card" id="questionCard">
+    <h1>Do you want to be my Valentine? 💘</h1>
+    <div class="buttons-container">
+      <button id="yesBtn">Yes ❤️</button>
+      <button id="noBtn">No 💔</button>
+    </div>
+  </div>
+
+  <!-- Celebration Card -->
+  <div class="celebration" id="celebrationCard">
+    <h2>Good decision ❤️</h2>
+    <p>I love you 😍💖</p>
+  </div>
+
+  <audio id="valentineAudio" src="audio/Main Hoon Saath Tere Shaadi Mein Zaroor Aana 128 Kbps.mp3"></audio>
+
+  <script>
+    const noBtn = document.getElementById('noBtn');
+    const yesBtn = document.getElementById('yesBtn');
+    const questionCard = document.getElementById('questionCard');
+    const celebrationCard = document.getElementById('celebrationCard');
+    const audio = document.getElementById('valentineAudio');
+
+    // Move NO button on hover or click in 2D plane
+    function moveNoButton() {
+      const container = document.querySelector('.buttons-container');
+      const containerRect = container.getBoundingClientRect();
+      const btnRect = noBtn.getBoundingClientRect();
+      
+      // Calculate available space for movement
+      const maxX = containerRect.width - btnRect.width;
+      const maxY = containerRect.height - btnRect.height;
+      
+      // Random position within bounds
+      const randomX = Math.random() * Math.max(0, maxX);
+      const randomY = Math.random() * Math.max(0, maxY);
+      
+      noBtn.style.left = randomX + 'px';
+      noBtn.style.top = randomY + 'px';
+    }
+
+    noBtn.addEventListener('mouseover', moveNoButton);
+    noBtn.addEventListener('click', moveNoButton);
+
+    // YES button click → show celebration and play audio
+    yesBtn.addEventListener('click', () => {
+      questionCard.style.display = 'none';
+      celebrationCard.style.display = 'block';
+      audio.play().catch(() => {});
+      startHearts();
+    });
+
+    // Attempt to autoplay the valentine audio on load; if blocked,
+    // play on first user interaction (click/keydown).
+    audio.loop = true;
+    audio.play().catch(()=>{
+      const playOnInteraction = () => { audio.play().catch(()=>{}); };
+      document.body.addEventListener('click', playOnInteraction, { once: true });
+      document.body.addEventListener('keydown', playOnInteraction, { once: true });
+    });
+
+    // Create floating hearts animation
+    function startHearts() {
+      setInterval(() => {
+        const heart = document.createElement('div');
+        heart.classList.add('heart');
+        heart.innerHTML = '❤️';
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.animationDuration = (Math.random() * 2 + 3) + 's';
+        document.body.appendChild(heart);
+
+        // Remove heart after animation completes
+        setTimeout(() => heart.remove(), 5000);
+      }, 300);
+    }
+  </script>
+</body>
+</html>
