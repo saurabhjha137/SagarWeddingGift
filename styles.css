@@ -14,10 +14,42 @@ body{
   align-items:center;
   justify-content:center;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #ffa502 100%);
-  background-size: 400% 400%;
-  animation: gradientShift 15s ease infinite;
+  background: linear-gradient(135deg, #1a0f2e 0%, #16213e 50%, #0f3460 100%);
+  background-image: url('picture/Media (11).jpeg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
   min-height:100vh;
+  position: relative;
+}
+
+/* Page-specific backgrounds */
+body.proposal-page {
+  background-image: url('picture/Media (11).jpeg');
+}
+
+body.landing-page {
+  background-image: url('picture/Media (12).jpeg');
+}
+
+body.success-page {
+  background-image: url('picture/Media (13).jpeg');
+}
+
+body.newmap-page {
+  background-image: url('picture/Media (14).jpeg');
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(26, 15, 46, 0.75);
+  pointer-events: none;
+  z-index: 0;
 }
 
 @keyframes gradientShift{
@@ -28,15 +60,61 @@ body{
 
 .card{
   width:var(--card-width);
-  height:400px;
-  padding:28px;
-  border-radius:14px;
-  background:#fff;
-  box-shadow:0 10px 30px rgba(0,0,0,0.12);
+  min-height:300px;
+  padding:40px;
+  border-radius:20px;
+  background: rgba(26, 15, 46, 0.55);
+  border: 3px solid #ff1744;
+  box-shadow: 0 15px 50px rgba(255, 23, 68, 0.4);
   text-align:center;
+  position: relative;
+  z-index: 1;
+  backdrop-filter: blur(0.1px);
+  transition: all 0.3s ease;
 }
 
-.question{font-size:1.25rem;margin:0 0 22px;color:#111}
+.card:hover {
+  transform: scale(1.1);
+  box-shadow: 0 20px 70px rgba(255, 23, 68, 0.6);
+}
+
+/* Milestone hover enhancement for consistency */
+.milestone {
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.milestone:hover {
+  transform: scale(1.35);
+  filter: brightness(1.1);
+}
+
+.close-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 35px;
+  height: 35px;
+  border: none;
+  background: #ff1744;
+  color: white;
+  border-radius: 50%;
+  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(255, 23, 68, 0.3);
+  z-index: 10;
+}
+
+.close-btn:hover {
+  background: #ff5277;
+  transform: rotate(90deg) scale(1.1);
+  box-shadow: 0 8px 20px rgba(255, 23, 68, 0.5);
+}
+
+.question{font-size:2rem;margin:0 0 30px;color:#ff1744;font-weight:700;letter-spacing:1px}
 
 .buttons{position:relative;height:90px;display:flex;align-items:center;justify-content:center;gap:16px}
 
@@ -62,7 +140,7 @@ body{
   left: -100%;
   width: 100%;
   height: 100%;
-  background: rgba(118, 111, 111, 0.2);
+  background: rgba(255, 255, 255, 0.2);
   transition: left 0.01s ease;
   z-index: -1;
 }
@@ -72,12 +150,12 @@ body{
 }
 
 .yes{
-  background: var(--success-gradient);
+  background: linear-gradient(135deg, #ff1744 0%, #ff6f9e 100%);
 }
 
 .yes:hover{
   transform: translateY(-8px) scale(1.08);
-  box-shadow: 0 15px 40px rgba(245, 87, 108, 0.4);
+  box-shadow: 0 15px 40px rgba(255, 23, 68, 0.6);
 }
 
 .yes:active{
@@ -85,12 +163,12 @@ body{
 }
 
 .no{
-  background: var(--warn-gradient);
+  background: linear-gradient(135deg, #ff1744 0%, #c2185b 100%);
 }
 
 .no:hover{
   transform: translateY(-8px) scale(1.08);
-  box-shadow: 0 15px 40px rgba(250, 112, 154, 0.4);
+  box-shadow: 0 15px 40px rgba(255, 23, 68, 0.6);
 }
 
 .no:active{
@@ -98,7 +176,7 @@ body{
 }
 
 .btn:focus{
-  outline: 3px solid rgba(102, 126, 234, 0.3);
+  outline: 3px solid rgba(255, 23, 68, 0.5);
   outline-offset: 2px;
 }
 
@@ -122,15 +200,21 @@ body{
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, rgba(102, 126, 234, 0.6), rgba(245, 87, 108, 0.6));
+  background: rgba(26, 15, 46, 0.75);
   z-index: 1;
 }
 
-.landing{background-image: url('https://picsum.photos/seed/landing/1600/900');
+.landing{background-image: url('picture/Media (12).jpeg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
   animation: zoomBackground 20s ease-in-out infinite;
 }
 
-.success{background-image: url('https://picsum.photos/seed/success/1600/900');
+.success{background-image: url('picture/Media (13).jpeg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
   animation: zoomBackground 20s ease-in-out infinite;
 }
 
@@ -140,16 +224,16 @@ body{
 }
 
 .overlay{
-  background: rgba(0,0,0,0.2);
-  backdrop-filter: blur(8px);
+  background: transparent;
+  backdrop-filter: none;
   padding:60px 48px;
-  border-radius:20px;
+  border-radius:0;
   color:#fff;
   text-align:center;
   position:relative;
   z-index: 2;
-  border: 1px solid rgba(255,255,255,0.2);
-  box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+  border: none;
+  box-shadow: none;
   animation: overlayFadeIn 1s ease-out;
 }
 
@@ -171,6 +255,7 @@ body{
   text-shadow: 0 4px 15px rgba(0,0,0,0.3);
   letter-spacing: -1px;
   animation: slideInDown 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+  color: #fff;
 }
 
 .landing-sub{
@@ -178,6 +263,7 @@ body{
   font-size: 1.2rem;
   opacity: 0.95;
   animation: slideInUp 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s both;
+  color: #ffb3c1;
 }
 
 @keyframes slideInDown{
@@ -206,27 +292,48 @@ body{
   position:static;
   margin:0 8px;
   min-width: 180px;
+  background: linear-gradient(135deg, #ff1744 0%, #ff6f9e 100%);
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.landing-actions .btn:hover {
+  transform: translateY(-8px) scale(1.08);
+  box-shadow: 0 15px 40px rgba(255, 23, 68, 0.6);
 }
 
 .success-title{
-  font-size:2.8rem;
+  font-size:3.5rem;
   margin:0 0 12px;
   font-weight: 800;
   text-shadow: 0 4px 15px rgba(0,0,0,0.3);
   animation: slideInDown 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+  background: linear-gradient(135deg, #ff1744 0%, #ff6f9e 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: 2px;
 }
 
 .success-sub{
   margin: 0 0 32px;
-  font-size: 1.1rem;
+  font-size: 1.3rem;
   opacity: 0.95;
   animation: slideInUp 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s both;
+  color: #ffb3c1;
+  letter-spacing: 1px;
 }
 
 .actions .btn{
   position:static;
   margin:0 8px;
   min-width: 160px;
+  background: linear-gradient(135deg, #ff1744 0%, #ff6f9e 100%);
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.actions .btn:hover {
+  transform: translateY(-8px) scale(1.08);
+  box-shadow: 0 15px 40px rgba(255, 23, 68, 0.6);
 }
 
 /* make proposal buttons not overlap outside on small screens */
@@ -237,4 +344,51 @@ body{
 #card .btn{
   position: absolute;
   transition: left 0.22s ease, top 0.22s ease, transform 0.12s ease;
+}
+
+/* Please Say Yes Overlay */
+.please-say-yes-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 20px;
+  animation: fadeIn 0.3s ease;
+}
+
+.please-say-yes-overlay.show {
+  display: flex;
+}
+
+.please-say-yes-overlay img {
+  max-width: 400px;
+  width: 90%;
+  border-radius: 15px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.please-say-yes-overlay .message {
+  color: #fff;
+  font-size: 1.8rem;
+  font-weight: 700;
+  text-align: center;
+  text-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+  animation: pulse 1s ease infinite;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
 }

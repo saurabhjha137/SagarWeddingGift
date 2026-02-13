@@ -3,6 +3,8 @@ document.addEventListener('DOMContentLoaded', ()=>{
   const yes = document.getElementById('yesBtn');
   const no = document.getElementById('noBtn');
   const audio = document.getElementById('proposalAudio');
+  const pleaseOverlay = document.getElementById('pleaseOverlay');
+  const closeBtn = document.getElementById('closeBtn');
 
   function setInitialPositions(){
     const areaRect = buttonsArea.getBoundingClientRect();
@@ -38,7 +40,18 @@ document.addEventListener('DOMContentLoaded', ()=>{
     no.style.top = y + 'px';
   }
 
-  no.addEventListener('click', (e)=>{ e.preventDefault(); moveNoAway(); });
+  function showPleaseOverlay(){
+    pleaseOverlay.classList.add('show');
+    setTimeout(() => {
+      pleaseOverlay.classList.remove('show');
+      moveNoAway();
+    }, 3000);
+  }
+
+  no.addEventListener('click', (e)=>{ 
+    e.preventDefault(); 
+    showPleaseOverlay();
+  });
   no.addEventListener('mouseenter', moveNoAway);
   no.addEventListener('focus', moveNoAway);
 
@@ -64,6 +77,10 @@ document.addEventListener('DOMContentLoaded', ()=>{
     };
     document.body.addEventListener('click', playOnInteraction, { once: true });
     document.body.addEventListener('keydown', playOnInteraction, { once: true });
+  });
+
+  closeBtn.addEventListener('click', () => {
+    window.history.back();
   });
 });
 

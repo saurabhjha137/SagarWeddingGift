@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<!-- ...existing code from newMap.html will be copied here... --><!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>7 Phases of Love - Our Journey</title>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        background: linear-gradient(135deg, #1a0f2e 0%, #16213e 50%, #0f3460 100%);
+        background-image: url('picture/Media (14).jpeg');
+        background-attachment: fixed;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: #fff;
+        min-height: 100vh;
+        width: 100vw;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 40px 20px;
+        position: relative;
+        overflow-x: hidden;
+    }
+
+    body::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(26, 15, 46, 0.85);
+        pointer-events: none;
+        z-index: -1;
+    }
+
+    /* Heart animation background */
+    .hearts-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 0;
+    }
+
+    .heart {
+        position: absolute;
+        font-size: 2rem;
+        opacity: 0.1;
+        animation: float 6s infinite ease-in-out;
+    }
+
+    @keyframes float {
+        0%, 100% { transform: translateY(0px) rotate(0deg); }
+        50% { transform: translateY(-100px) rotate(10deg); }
+    }
+
+    /* Main container */
+    .container {
+        position: relative;
+        z-index: 1;
+        max-width: 1200px;
+        width: 100%;
+    }
+
+    /* Title section */
+    .title-section {
+        text-align: center;
+        margin-bottom: 60px;
+        animation: fadeInDown 0.8s ease;
+    }
+
+    .title {
+        font-size: 3rem;
+        font-weight: 700;
+        background: linear-gradient(135deg, #ff1744 0%, #ff6f9e 50%, #ff1744 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 10px;
+        letter-spacing: 1px;
+    }
+
+    .subtitle {
+        font-size: 1.1rem;
+        color: #d4a5d4;
+        font-weight: 300;
+        letter-spacing: 2px;
+    }
+
+    /* Roadmap section */
+    .roadmap {
+        position: relative;
+        padding: 60px 0;
+        margin-bottom: 80px;
+    }
+
+    /* Road */
+    .road {
+        height: 8px;
+        background: linear-gradient(90deg, #ff1744 0%, #ff6f9e 50%, #c2185b 100%);
+        border-radius: 10px;
+        position: relative;
+        box-shadow: 0 0 20px rgba(255, 23, 68, 0.4);
+    }
+
+    /* Milestones */
+    .milestone {
+        position: absolute;
+        top: -26px;
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, #ff1744 0%, #ff6f9e 100%);
+        border-radius: 50%;
+        border: 4px solid #1a0f2e;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        transition: all 0.3s ease;
+        box-shadow: 0 8px 20px rgba(255, 23, 68, 0.3);
+    }
+
+    .milestone:hover {
+        transform: scale(1.35);
+        box-shadow: 0 15px 40px rgba(255, 23, 68, 0.8);
+        filter: brightness(1.1);
+    }
+
+    .milestone-number {
+        font-size: 1.5rem;
+    }
+
+    .milestone-phase {
+        font-size: 0.6rem;
+        margin-top: 2px;
+        opacity: 0.9;
+    }
+
+    /* Modal Popup */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 2000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.6);
+        animation: fadeIn 0.3s ease;
+    }
+
+    .modal.show {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .modal-content {
+        background: rgba(26, 15, 46, 0.65);
+        border: 3px solid #ff1744;
+        border-radius: 20px;
+        max-width: 700px;
+        max-height: 700px;
+        height: 90%;
+        width: 90%;
+        overflow: hidden;
+        box-shadow: 0 30px 60px rgba(255, 23, 68, 0.5);
+        backdrop-filter: blur(16px);
+        animation: slideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        position: relative;
+    }
+
+    .modal-image {
+        width: 100%;
+        height: 580px;
+        object-fit: contain;
+        background: rgba(0, 0, 0, 0.3);
+        padding: 10px;
+    }
+
+    .modal-text {
+        padding: 25px;
+        text-align: center;
+    }
+
+    .modal-quote {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        color: #ff9fbf;
+        font-style: italic;
+        margin-bottom: 15px;
+    }
+
+    .modal-quote-secondary {
+        font-size: 0.95rem;
+        line-height: 1.6;
+        color: #d4a5d4;
+        font-style: normal;
+        margin-bottom: 15px;
+        font-weight: 500;
+    }
+
+    .modal-phase {
+        font-size: 0.95rem;
+        color: #ff1744;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+    }
+
+    .modal-close {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        font-size: 1.5rem;
+        color: #fff;
+        cursor: pointer;
+        background: rgba(255, 23, 68, 0.7);
+        border: none;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        z-index: 2001;
+    }
+
+    .modal-close:hover {
+        background: #ff1744;
+    }
+
+    @keyframes slideUp {
+        from {
+            opacity: 0;
+            transform: translateY(50px) scale(0.9);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    /* Positions */
+    .m1 { left: 0%; }
+    .m2 { left: 14.28%; }
+    .m3 { left: 28.56%; }
+    .m4 { left: 42.84%; }
+    .m5 { left: 57.12%; }
+    .m6 { left: 71.4%; }
+    .m7 { left: 85.68%; }
+
+    /* Slider Button - Centered below roadmap */
+    .slider-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+        margin-top: 40px;
+    }
+
+    .swipe-slider {
+        position: relative;
+        width: 580px;
+        height: 70px;
+        background: rgba(26, 15, 46, 0.8);
+        border: 3px solid #ff1744;
+        border-radius: 35px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        overflow: hidden;
+        box-shadow: 0 15px 40px rgba(255, 23, 68, 0.4);
+        transition: all 0.3s ease;
+        backdrop-filter: blur(10px);
+    }
+
+    .swipe-slider:hover {
+        box-shadow: 0 20px 50px rgba(255, 23, 68, 0.6);
+        transform: translateY(-5px);
+        background: rgba(26, 15, 46, 0.95);
+    }
+
+    .swipe-slider.unlocked {
+        background: linear-gradient(90deg, #ff1744 0%, #ff6f9e 100%);
+    }
+
+    .swipe-slider.unlocked .slider-circle {
+        transform: translateX(218px);
+        background: #fff;
+    }
+
+    .swipe-slider.unlocked .swipe-text.left {
+        opacity: 0;
+    }
+
+    .swipe-slider.unlocked .swipe-text.right {
+        opacity: 1;
+        color: #fff;
+    }
+
+    .slider-circle {
+        position: absolute;
+        left: 3px;
+        width: 62px;
+        height: 62px;
+        background: #fff;
+        border: 3px solid #ff1744;
+        border-radius: 50%;
+        transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        box-shadow: 0 5px 15px rgba(255, 23, 68, 0.2);
+    }
+
+    .swipe-text {
+        position: absolute;
+        width: 100%;
+        text-align: center;
+        font-weight: 600;
+        font-size: 1rem;
+        color: #ff1744;
+        transition: all 0.3s ease;
+        user-select: none;
+    }
+
+    .swipe-text.left {
+        left: 0;
+        padding-left: 80px;
+    }
+
+    .swipe-text.right {
+        right: 0;
+        padding-right: 20px;
+        opacity: 0;
+    }
+
+    @keyframes slideHint {
+        0%, 100% { transform: translateX(0); }
+        50% { transform: translateX(12px); }
+    }
+
+    .swipe-slider:not(.unlocked) .slider-circle {
+        animation: slideHint 2s infinite;
+    }
+
+    /* Animations */
+    @keyframes fadeInDown {
+        from {
+            opacity: 0;
+            transform: translateY(-30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .roadmap {
+        animation: fadeInUp 0.8s ease 0.3s backwards;
+    }
+
+    .slider-section {
+        animation: fadeInUp 0.8s ease 0.6s backwards;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .title {
+            font-size: 2rem;
+        }
+
+        .roadmap {
+            padding: 40px 0;
+        }
+
+        .milestone {
+            width: 50px;
+            height: 50px;
+            top: -22px;
+        }
+
+        .milestone-number {
+            font-size: 1.2rem;
+        }
+
+        .swipe-slider {
+            width: 240px;
+            height: 60px;
+        }
+
+        .slider-circle {
+            width: 54px;
+            height: 54px;
+            font-size: 20px;
+        }
+
+        .swipe-text.left {
+            padding-left: 70px;
+        }
+
+        .swipe-slider.unlocked .slider-circle {
+            transform: translateX(175px);
+        }
+    }
+
+</style>
+</head>
+
+<body>
+
+<div class="hearts-bg" id="heartsBg"></div>
+
+<div class="container">
+    <div class="title-section">
+        <h1 class="title">7 Phases of Love ❤️</h1>
+        <p class="subtitle">OUR BEAUTIFUL JOURNEY TOGETHER</p>
+    </div>
+
+    <div class="roadmap">
+        <div class="road">
+            <!-- Phase 1: Attraction -->
+            <div class="milestone m1" data-phase="ATTRACTION" data-quote="The moment I saw you, everything changed..." data-quote-secondary="Our hearts knew before our minds understood" data-image="picture/Media (1).jpeg">
+                <div class="milestone-number">1</div>
+                <div class="milestone-phase">Spark</div>
+            </div>
+
+            <!-- Phase 2: Infatuation -->
+            <div class="milestone m2" data-phase="INFATUATION" data-quote="Every moment with you feels like a dream..." data-quote-secondary="Lost in your eyes, found in your smile" data-image="picture/Media (2).jpeg">
+                <div class="milestone-number">2</div>
+                <div class="milestone-phase">Bliss</div>
+            </div>
+
+            <!-- Phase 3: Desire -->
+            <div class="milestone m3" data-phase="DESIRE" data-quote="I crave your presence, your touch, your love..." data-quote-secondary="You are my weakness and my greatest strength" data-image="picture/Media (3).jpeg">
+                <div class="milestone-number">3</div>
+                <div class="milestone-phase">Desire</div>
+            </div>
+
+            <!-- Phase 4: Intimacy -->
+            <div class="milestone m4" data-phase="INTIMACY" data-quote="You know me better than anyone, in every way..." data-quote-secondary="Together, we are beautifully vulnerable" data-image="picture/Media (4).jpeg">
+                <div class="milestone-number">4</div>
+                <div class="milestone-phase">Bond</div>
+            </div>
+
+            <!-- Phase 5: Trust -->
+            <div class="milestone m5" data-phase="TRUST" data-quote="With you, I found my safe harbor..." data-quote-secondary="In your arms, I am home" data-image="picture/Media (5).jpeg">
+                <div class="milestone-number">5</div>
+                <div class="milestone-phase">Faith</div>
+            </div>
+
+            <!-- Phase 6: Commitment -->
+            <div class="milestone m6" data-phase="COMMITMENT" data-quote="I choose you, every single day..." data-quote-secondary="Forever with you is never enough" data-image="picture/Media (6).jpeg">
+                <div class="milestone-number">6</div>
+                <div class="milestone-phase">Forever</div>
+            </div>
+
+            <!-- Phase 7: True Love -->
+            <div class="milestone m7" data-phase="TRUE LOVE" data-quote="This is forever... this is us, this is love..." data-quote-secondary="Soulmates bound by destiny and choice" data-image="picture/Media (7).jpeg">
+                <div class="milestone-number">7</div>
+                <div class="milestone-phase">Eternal</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for displaying phase details -->
+    <div class="modal" id="phaseModal">
+        <div class="modal-content">
+            <button class="modal-close">&times;</button>
+            <img class="modal-image" id="modalImage" src="" alt="Phase Image">
+            <div class="modal-text">
+                <div class="modal-quote" id="modalQuote"></div>
+                <div class="modal-quote-secondary" id="modalQuoteSecondary"></div>
+                <div class="modal-phase" id="modalPhase"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slider-section">
+        <div class="swipe-slider" id="backSlider">
+            <div class="slider-circle">❤️</div>
+                <span class="swipe-text left">"Chalo, ishq ke safar par ek nayi dastaan likhte hain..."</span>
+            <span class="swipe-text right">✓</span>
+        </div>
+    </div>
+</div>
+
+<audio id="ishqAudio" loop>
+    <source src="audio/ISHQ.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+    // Autoplay ISHQ.mp3
+    const ishqAudio = document.getElementById('ishqAudio');
+    ishqAudio.play().catch(err => {
+        // Autoplay was blocked by browser, will play on user interaction
+        document.addEventListener('click', () => {
+            ishqAudio.play().catch(()=>{});
+        }, { once: true });
+    });
+
+    // Generate floating hearts in background
+    function generateHearts() {
+        const heartsBg = document.getElementById('heartsBg');
+        for (let i = 0; i < 15; i++) {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '💕';
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.top = -50 + 'px';
+            heart.style.animationDelay = Math.random() * 4 + 's';
+            heart.style.animationDuration = (5 + Math.random() * 4) + 's';
+            heartsBg.appendChild(heart);
+        }
+    }
+
+    generateHearts();
+
+    // Modal functionality
+    const modal = document.getElementById('phaseModal');
+    const modalClose = modal.querySelector('.modal-close');
+    const milestones = document.querySelectorAll('.milestone');
+
+    milestones.forEach(milestone => {
+        milestone.addEventListener('click', () => {
+            const phase = milestone.dataset.phase;
+            const quote = milestone.dataset.quote;
+            const quoteSecondary = milestone.dataset.quoteSecondary;
+            const image = milestone.dataset.image;
+
+            document.getElementById('modalPhase').textContent = phase;
+            document.getElementById('modalQuote').textContent = `"${quote}"`;
+            document.getElementById('modalQuoteSecondary').textContent = quoteSecondary;
+            document.getElementById('modalImage').src = image;
+
+            modal.classList.add('show');
+        });
+    });
+
+    modalClose.addEventListener('click', () => {
+        modal.classList.remove('show');
+    });
+
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.classList.remove('show');
+        }
+    });
+
+    // Slider functionality
+    const backSlider = document.getElementById('backSlider');
+    let isDragging = false;
+    let startX = 0;
+
+    backSlider.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        startX = e.clientX;
+    });
+
+    document.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+
+        const currentX = e.clientX;
+        const distance = currentX - startX;
+
+        if (distance > 0) {
+            backSlider.style.transition = 'none';
+            const moveAmount = Math.min(distance, 218);
+            backSlider.querySelector('.slider-circle').style.transform = `translateX(${moveAmount}px)`;
+        }
+    });
+
+    document.addEventListener('mouseup', (e) => {
+        if (!isDragging) return;
+        isDragging = false;
+
+        const currentX = e.clientX;
+        const distance = currentX - startX;
+
+        backSlider.style.transition = 'all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
+
+        if (distance > 100) {
+            backSlider.classList.add('unlocked');
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 500);
+        } else {
+            backSlider.classList.remove('unlocked');
+            backSlider.querySelector('.slider-circle').style.transform = 'translateX(0)';
+        }
+    });
+
+    // Touch support for mobile
+    backSlider.addEventListener('touchstart', (e) => {
+        isDragging = true;
+        startX = e.touches[0].clientX;
+    });
+
+    document.addEventListener('touchmove', (e) => {
+        if (!isDragging) return;
+
+        const currentX = e.touches[0].clientX;
+        const distance = currentX - startX;
+
+        if (distance > 0) {
+            backSlider.style.transition = 'none';
+            const moveAmount = Math.min(distance, 218);
+            backSlider.querySelector('.slider-circle').style.transform = `translateX(${moveAmount}px)`;
+        }
+    });
+
+    document.addEventListener('touchend', (e) => {
+        if (!isDragging) return;
+        isDragging = false;
+
+        const currentX = e.changedTouches[0].clientX;
+        const distance = currentX - startX;
+
+        backSlider.style.transition = 'all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
+
+        if (distance > 100) {
+            backSlider.classList.add('unlocked');
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 500);
+        } else {
+            backSlider.classList.remove('unlocked');
+            backSlider.querySelector('.slider-circle').style.transform = 'translateX(0)';
+        }
+    });
+</script>
+
+</body>
+</html>
